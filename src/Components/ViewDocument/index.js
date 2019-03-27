@@ -20,7 +20,7 @@ export default class ViewDocument extends Component {
                 <View style={{ padding: 10, flex: 1 }} >
                     <Text style={{ fontSize: 20, fontWeight: "500", color: "#3454cd" }} >{document.documanentVal}</Text>
                     <View style={{ marginTop: 10 }} >
-                        <Text style={{}} >{document.noteText}</Text>
+                        <Text >{document.noteText}</Text>
                     </View>
                 </View>
             </View>
