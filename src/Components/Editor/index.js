@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     TextInput
 } from 'react-native';
-import {  Textarea, Form } from "native-base";
+import { Textarea, Form } from "native-base";
 import firebase from "react-native-firebase"
 
 
@@ -54,7 +54,7 @@ export default class Dashboard extends Component {
         return (
             <View style={styles.container} >
                 <View style={{ height: 70, width: "100%", backgroundColor: '#3454cd', alignItems: "flex-end", justifyContent: "space-between", flexDirection: "row", padding: 10 }} >
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Dashboard")} >
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Dashboard")} >
                         <Text style={{ fontSize: 15, fontWeight: "500", color: "#fff" }} > Cancel</Text>
                     </TouchableOpacity>
                     <Text style={{ fontSize: 20, fontWeight: "500", color: "#fff" }} > Note</Text>
@@ -66,6 +66,7 @@ export default class Dashboard extends Component {
                 <View style={styles.TextInputContainer} >
                     <View style={styles.TextInputView} >
                         <TextInput
+                            placeholder="Document Name"
                             value={this.state.documanentVal}
                             onChangeText={(documanentVal) => this.setState({ documanentVal })}
                             style={styles.TextInput} />
