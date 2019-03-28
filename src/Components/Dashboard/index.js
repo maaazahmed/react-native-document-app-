@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions, Modal } from 'react-native';
+import { Platform, StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions, Modal, Share, BackHandler, Alert } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import firebase from "react-native-firebase"
 
@@ -12,9 +12,41 @@ export default class App extends Component {
         this.state = {
             modalVisible: false,
             currentUser: {},
+            shareDocument: {},
             documentsArr: []
         };
     }
+
+
+
+    componentDidMount() {
+        if (Platform.OS == "android") {
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        }
+    }
+
+    handleBackButton = () => {
+        Alert.alert(
+            'Exit App',
+            'Exiting the application?', [{
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => BackHandler.exitApp()
+            },], {
+                cancelable: false
+            }
+        )
+        return true;
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+
+
 
 
     async componentWillMount() {
@@ -41,6 +73,7 @@ export default class App extends Component {
             }
         })
     }
+
     setModalVisible(visible) {
         this.setState({ modalVisible: visible });
     }
@@ -49,12 +82,23 @@ export default class App extends Component {
         this.setState({ modalVisible: false });
 
     }
-
-
     logout() {
         firebase.auth().signOut()
         this.props.navigation.navigate("SignIn")
     }
+
+
+    async  onShare(item) {
+        try {
+            await Share.share({
+                title: item.documanentVal,
+                message:
+                    `${item.documanentVal} : ${item.noteText}`,
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
 
 
@@ -79,6 +123,7 @@ export default class App extends Component {
                                 renderItem={({ item }) => {
                                     return (
                                         <TouchableOpacity
+                                            onLongPress={this.onShare.bind(this, item)}
                                             onPress={() => { this.props.navigation.navigate("ViewDocument", item) }}
                                             style={{
                                                 height: height / 12,

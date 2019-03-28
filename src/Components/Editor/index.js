@@ -4,7 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    TextInput
+    TextInput,
 } from 'react-native';
 import { Textarea, Form } from "native-base";
 import firebase from "react-native-firebase"
@@ -88,6 +88,9 @@ export default class Dashboard extends Component {
         );
     }
 }
+
+
+// https://www.facebook.com/groups/895646787179039/2120981241312248/?comment_id=2121006757976363&reply_comment_id=2121217984621907&notif_id=1553710779414190&notif_t=group_comment
 
 const styles = StyleSheet.create({
     container: {
